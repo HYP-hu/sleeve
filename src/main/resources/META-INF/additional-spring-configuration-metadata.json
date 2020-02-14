@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "hero.condition",
+      "type": "java.lang.String",
+      "description": "Description for hero.condition."
+    },
+    {
+      "name": "hero.condition",
+      "type": "java.lang.String",
+      "description": "Description for hero.condition."
+    }
+  ] }
