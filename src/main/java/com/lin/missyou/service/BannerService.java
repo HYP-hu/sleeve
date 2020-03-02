@@ -1,12 +1,11 @@
 package com.lin.missyou.service;
 
 
-import com.lin.missyou.model.BannerModel;
-import org.springframework.stereotype.Service;
+import com.lin.missyou.model.Banner;
 
 
 public interface BannerService {
-    BannerModel getByName(String name);
+    Banner getByName(String name);
 }
 
 // 代码粒度 不够小 类 承担职责过多

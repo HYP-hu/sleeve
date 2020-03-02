@@ -1,4 +1,4 @@
-package com.lin.missyou.model;
+package com.lin.missyou.model1;
 
 
 import lombok.Getter;
@@ -23,6 +23,7 @@ public class BannerModel {
     private String title;
     // 懒加载和急加载
     @OneToMany(mappedBy = "bannerModel", fetch = FetchType.EAGER)
+//    @org.hibernate.annotations.ForeignKey(name="null")
 //    @JoinColumn(name = "bannerId")
     private List<BannerItemModel> items;
 

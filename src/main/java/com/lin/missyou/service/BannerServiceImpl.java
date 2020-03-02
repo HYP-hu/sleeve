@@ -1,6 +1,6 @@
 package com.lin.missyou.service;
 
-import com.lin.missyou.model.BannerModel;
+import com.lin.missyou.model.Banner;
 import com.lin.missyou.repository.BannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +12,8 @@ public class BannerServiceImpl implements BannerService{
     private BannerRepository bannerRepository;
 
     @Override
-    public BannerModel getByName(String name) {
-        BannerModel bannerModel = bannerRepository.findOneByName(name);
-        return  bannerModel;
+    public Banner getByName(String name) {
+        Banner banner = bannerRepository.findOneByName(name);
+        return  banner;
     }
 }

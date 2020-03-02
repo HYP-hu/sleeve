@@ -30,7 +30,6 @@ public class GlobalExceptionAdvice {
     public UnifyResponse handleException(HttpServletRequest req, Exception e){
         String url = req.getRequestURI();
         String method =req.getMethod();
-        System.out.println(e);
         UnifyResponse message  = new UnifyResponse(999, "服务器异常", method + " " + url);
         return message;
     }
