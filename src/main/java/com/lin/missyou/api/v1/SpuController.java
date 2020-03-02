@@ -1,6 +1,9 @@
 package com.lin.missyou.api.v1;
 
 
+import com.github.dozermapper.core.DozerBeanMapper;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 import com.lin.missyou.exception.http.NotFoundException;
 import com.lin.missyou.model.Spu;
 import com.lin.missyou.service.SpuService;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.Positive;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,11 +46,19 @@ public class SpuController {
     }
 
     @GetMapping("/latest")
-    public List<Spu> getLatestSpuList(){
+    public List<SpuSimplifyVO> getLatestSpuList(){
         List<Spu> spuList = this.spuService.getLatestPagingSpu();
-//        Mapper mapper = Dozer
-        return this.spuService.getLatestPagingSpu();
+        Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+        List<SpuSimplifyVO> vos = new ArrayList<>();
+        spuList.forEach(spu -> {
+            // 递归拷贝
+            SpuSimplifyVO vo = mapper.map(spu, SpuSimplifyVO.class);
+            vos.add(vo);
+        });
+        return vos;
     }
+
+
 
 
 }
