@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 
@@ -63,8 +64,12 @@ public class GlobalExceptionAdvice {
     public UnifyResponse handleConstraintException(HttpServletRequest req, ConstraintViolationException e){
         String requestUrl = req.getRequestURI();
         String method = req.getMethod();
+        StringBuffer errorMsg = new StringBuffer();
 //        for (ConstraintViolation error: e.getConstraintViolations()){
-//            ConstraintViolation a = error;
+//            ConstraintViolation msg = error;
+//            String m = error.getMessage();
+//            String name = m.split("[.]]")[1];
+//            errorMsg.append(name).append(" ");
 //        }
         String message = e.getMessage();
         return new UnifyResponse(10001, message, method + " " + requestUrl);

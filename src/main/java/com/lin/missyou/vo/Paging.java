@@ -21,6 +21,7 @@ public class Paging<T> {
 
     public Paging(Page<T> pageT){
         this.initPageParameters(pageT);
+        this.items = pageT.getContent();         // 内容
     }
 
     void initPageParameters(Page<T> pageT){
@@ -28,6 +29,6 @@ public class Paging<T> {
         this.count = pageT.getSize();            // 数量
         this.page = pageT.getNumber();           // 页码
         this.totalPage = pageT.getTotalPages();  // 总页码
-        this.items = pageT.getContent();         // 内容
+
     }
 }

@@ -9,6 +9,8 @@ import com.lin.missyou.exception.http.NotFoundException;
 import com.lin.missyou.model.Spu;
 import com.lin.missyou.service.SpuService;
 import com.lin.missyou.util.CommonUtil;
+import com.lin.missyou.vo.Paging;
+import com.lin.missyou.vo.PagingDozer;
 import com.lin.missyou.vo.SpuSimplifyVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class SpuController {
     }
 
     @GetMapping("/id/{id}/simplify")
-    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive Long id){
+    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive(message = "{id.positive}") Long id){
         Spu spu = this.spuService.getSpu(id);
         SpuSimplifyVO vo = new SpuSimplifyVO();
         BeanUtils.copyProperties(spu, vo);
@@ -46,18 +48,32 @@ public class SpuController {
     }
 
     @GetMapping("/latest")
-    public List<SpuSimplifyVO> getLatestSpuList(@RequestParam(defaultValue = "0") Integer start,
+    public PagingDozer<Spu, SpuSimplifyVO> getLatestSpuList(@RequestParam(defaultValue = "0") Integer start,
                                                 @RequestParam(defaultValue = "20") Integer count){
         PageCounter pageCounter = CommonUtil.covertToPageParameter(start, count);
-        Page<Spu> spuList = this.spuService.getLatestPagingSpu(pageCounter.getPage(), pageCounter.getCount());
-        Mapper mapper = DozerBeanMapperBuilder.buildDefault();
-        List<SpuSimplifyVO> vos = new ArrayList<>();
-        spuList.forEach(spu -> {
-            // 递归拷贝
-            SpuSimplifyVO vo = mapper.map(spu, SpuSimplifyVO.class);
-            vos.add(vo);
-        });
-        return vos;
+        Page<Spu> page = this.spuService.getLatestPagingSpu(pageCounter.getPage(), pageCounter.getCount());
+//        List<Spu> content = paging.getItems();
+//        Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+//        List<SpuSimplifyVO> vos = new ArrayList<>();
+//        spuList.forEach(spu -> {
+//            // 递归拷贝
+//            SpuSimplifyVO vo = mapper.map(spu, SpuSimplifyVO.class);
+//            vos.add(vo);
+//        });
+        return new PagingDozer<>(page, SpuSimplifyVO.class);
+    }
+
+    @GetMapping("/by/category/{id}")
+    public PagingDozer<Spu, SpuSimplifyVO>getByCategoryId(@PathVariable @Positive Long id,
+                                                          @RequestParam(defaultValue = "false", name="is_root") Boolean isRoot,
+                                                          @RequestParam(name = "start", defaultValue = "0") Integer start,
+                                                          @RequestParam(defaultValue = "20") Integer count){
+        PageCounter pageCounter = CommonUtil.covertToPageParameter(start, count);
+        Page<Spu> page = this.spuService.getByCategory(id, isRoot, pageCounter.getPage(), pageCounter.getCount());
+        return new PagingDozer<>(page, SpuSimplifyVO.class);
+
+
+
     }
 
 

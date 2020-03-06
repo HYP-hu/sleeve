@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class SpuServiceImpl implements SpuService{
 
@@ -29,6 +27,16 @@ public class SpuServiceImpl implements SpuService{
         Sort sort = Sort.by("createTime").descending();
         Pageable page = PageRequest.of(pageNum, size, sort);
         return this.spuRepository.findAll(page);
+    }
+
+    @Override
+    public Page<Spu> getByCategory(Long cid, Boolean isRoot, Integer pageNum, Integer size) {
+        Sort sort = Sort.by("createTime").descending();
+        Pageable page = PageRequest.of(pageNum, size, sort);
+        if (isRoot){
+            return this.spuRepository.findByRootCategoryIdOrderByCreateTimeDesc(cid, page);
+        }
+        return this.spuRepository.findByCategoryId(cid, page);
     }
 
 }
