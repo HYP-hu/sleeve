@@ -68,7 +68,7 @@ public class GlobalExceptionAdvice {
 //        for (ConstraintViolation error: e.getConstraintViolations()){
 //            ConstraintViolation msg = error;
 //            String m = error.getMessage();
-//            String name = m.split("[.]]")[1];
+//            String name = m.split("[.]")[1];
 //            errorMsg.append(name).append(" ");
 //        }
         String message = e.getMessage();

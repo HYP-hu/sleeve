@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @MappedSuperclass  // 映射的基类/超类的标识符
 public abstract class BaseEntity {
-    @JsonIgnore
+    @JsonIgnore // 不会序列化 隐藏字段
     private Date createTime;
     @JsonIgnore
     private Date updateTime;

@@ -1,10 +1,9 @@
-package com.lin.missyou.validators;
+package com.lin.missyou.dto.validators;
 
 import com.lin.missyou.dto.PersonDTO;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.lang.annotation.Annotation;
 
 public class PasswordValidator implements ConstraintValidator<PasswordEqual, PersonDTO> {
     // 第二个: 自定义注解修饰的目标的类型 如何修饰name字段目标类型为String

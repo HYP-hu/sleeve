@@ -1,15 +1,11 @@
 package com.lin.missyou.api.v1;
 
 
-import com.github.dozermapper.core.DozerBeanMapper;
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
-import com.github.dozermapper.core.Mapper;
 import com.lin.missyou.bo.PageCounter;
 import com.lin.missyou.exception.http.NotFoundException;
 import com.lin.missyou.model.Spu;
 import com.lin.missyou.service.SpuService;
 import com.lin.missyou.util.CommonUtil;
-import com.lin.missyou.vo.Paging;
 import com.lin.missyou.vo.PagingDozer;
 import com.lin.missyou.vo.SpuSimplifyVO;
 import org.springframework.beans.BeanUtils;
@@ -19,8 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Validated
@@ -33,14 +27,14 @@ public class SpuController {
     @GetMapping("/id/{id}/detail")
     public Spu getDetail(@PathVariable @Positive Long id) {
         Spu spu = this.spuService.getSpu(id);
-        if (spu == null){
+        if (spu == null) {
             throw new NotFoundException(30003);
         }
         return spu;
     }
 
     @GetMapping("/id/{id}/simplify")
-    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive(message = "{id.positive}") Long id){
+    public SpuSimplifyVO getSimplifySpu(@PathVariable @Positive(message = "{id.positive}") Long id) {
         Spu spu = this.spuService.getSpu(id);
         SpuSimplifyVO vo = new SpuSimplifyVO();
         BeanUtils.copyProperties(spu, vo);
@@ -49,7 +43,7 @@ public class SpuController {
 
     @GetMapping("/latest")
     public PagingDozer<Spu, SpuSimplifyVO> getLatestSpuList(@RequestParam(defaultValue = "0") Integer start,
-                                                @RequestParam(defaultValue = "20") Integer count){
+                                                            @RequestParam(defaultValue = "20") Integer count) {
         PageCounter pageCounter = CommonUtil.covertToPageParameter(start, count);
         Page<Spu> page = this.spuService.getLatestPagingSpu(pageCounter.getPage(), pageCounter.getCount());
 //        List<Spu> content = paging.getItems();
@@ -64,19 +58,14 @@ public class SpuController {
     }
 
     @GetMapping("/by/category/{id}")
-    public PagingDozer<Spu, SpuSimplifyVO>getByCategoryId(@PathVariable @Positive Long id,
-                                                          @RequestParam(defaultValue = "false", name="is_root") Boolean isRoot,
-                                                          @RequestParam(name = "start", defaultValue = "0") Integer start,
-                                                          @RequestParam(defaultValue = "20") Integer count){
+    public PagingDozer<Spu, SpuSimplifyVO> getByCategoryId(@PathVariable @Positive Long id,
+                                                           @RequestParam(defaultValue = "false", name = "is_root") Boolean isRoot,
+                                                           @RequestParam(name = "start", defaultValue = "0") Integer start,
+                                                           @RequestParam(defaultValue = "20") Integer count) {
         PageCounter pageCounter = CommonUtil.covertToPageParameter(start, count);
         Page<Spu> page = this.spuService.getByCategory(id, isRoot, pageCounter.getPage(), pageCounter.getCount());
         return new PagingDozer<>(page, SpuSimplifyVO.class);
-
-
-
     }
-
-
 
 
 }

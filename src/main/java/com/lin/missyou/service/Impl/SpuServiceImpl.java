@@ -1,7 +1,8 @@
-package com.lin.missyou.service;
+package com.lin.missyou.service.Impl;
 
 import com.lin.missyou.model.Spu;
 import com.lin.missyou.repository.SpuRepository;
+import com.lin.missyou.service.SpuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpuServiceImpl implements SpuService{
+public class SpuServiceImpl implements SpuService {
 
 
     @Autowired
